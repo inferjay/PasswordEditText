@@ -228,13 +228,16 @@ public class PasswordEditText extends AppCompatEditText {
 
 
     private void showPasswordVisibilityIndicator(boolean shouldShowIcon) {
+        Drawable[] compoundDrawables = getCompoundDrawables();
+        Drawable leftDrawable = (hidePwDrawable != compoundDrawables[0]) && (showPwDrawable != compoundDrawables[0]) ? compoundDrawables[0] : null;
+        Drawable rightDrawable = (hidePwDrawable != compoundDrawables[2]) && (showPwDrawable != compoundDrawables[2]) ? compoundDrawables[2] : null;
         if (shouldShowIcon) {
             Drawable drawable = passwordVisible ? hidePwDrawable : showPwDrawable;
             showingIcon = true;
-            setCompoundDrawablesWithIntrinsicBounds(isRTL ? drawable : null, null, isRTL ? null : drawable, null);
+            setCompoundDrawablesWithIntrinsicBounds(isRTL ? drawable : leftDrawable, compoundDrawables[1], isRTL ? rightDrawable : drawable, compoundDrawables[3]);
         } else {
             // reset drawable
-            setCompoundDrawables(null, null, null, null);
+            setCompoundDrawables(leftDrawable , compoundDrawables[1], rightDrawable, compoundDrawables[3]);
             showingIcon = false;
         }
     }
